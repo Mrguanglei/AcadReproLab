@@ -168,13 +168,11 @@ npm run frontend  # 仅启动前端
 # 1. 配置环境变量（同源码部署）
 cp .env.example .env
 
-# 2. 拉取镜像并启动
-docker compose up -d
+# 2. 本地构建并启动
+docker compose up --build -d
 ```
 
 默认会读取根目录下的 `.env`，并映射端口 `3000（前端）/5001（后端）`
-
-> 在 `docker-compose.yml` 中已通过注释提供加速镜像地址，可按需替换
 
 ## 📬 更多交流
 

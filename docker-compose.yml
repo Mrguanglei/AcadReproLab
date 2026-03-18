@@ -1,9 +1,13 @@
 services:
-  mirofish:
-    image: ghcr.io/666ghj/mirofish:latest
-    # 加速镜像（如拉取缓慢可替换上方地址）
-    # image: ghcr.nju.edu.cn/666ghj/mirofish:latest
-    container_name: mirofish
+  acadrepro:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DEBIAN_MIRROR: https://mirrors.tuna.tsinghua.edu.cn
+        PYPI_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
+        NPM_REGISTRY: https://registry.npmmirror.com
+    container_name: acadrepro
     env_file:
       - .env
     ports:

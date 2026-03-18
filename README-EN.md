@@ -168,13 +168,11 @@ npm run frontend  # Start frontend only
 # 1. Configure environment variables (same as source deployment)
 cp .env.example .env
 
-# 2. Pull image and start
-docker compose up -d
+# 2. Build locally and start
+docker compose up --build -d
 ```
 
 Reads `.env` from root directory by default, maps ports `3000 (frontend) / 5001 (backend)`
-
-> Mirror address for faster pulling is provided as comments in `docker-compose.yml`, replace if needed.
 
 ## 📬 Join the Conversation
 
