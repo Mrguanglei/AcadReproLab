@@ -1,5 +1,9 @@
+name: acadrepro
+
 services:
   acadrepro:
+    image: acadrepro:latest
+    platform: linux/arm64
     build:
       context: .
       dockerfile: Dockerfile

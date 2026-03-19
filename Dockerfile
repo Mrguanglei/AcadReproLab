@@ -1,4 +1,4 @@
-FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/python:3.11.1
+FROM --platform=linux/arm64/v8 docker.m.daocloud.io/library/python:3.11
 
 # Debian apt 镜像源，可按需覆盖
 ARG DEBIAN_MIRROR=https://mirrors.tuna.tsinghua.edu.cn
@@ -13,8 +13,14 @@ ARG NPM_REGISTRY=https://registry.npmmirror.com
 ENV NPM_CONFIG_REGISTRY=${NPM_REGISTRY}
 
 # 安装 Node.js （满足 >=18）及必要工具
-RUN sed -i "s|http://deb.debian.org/debian|${DEBIAN_MIRROR}/debian|g" /etc/apt/sources.list \
-  && sed -i "s|http://security.debian.org/debian-security|${DEBIAN_MIRROR}/debian-security|g" /etc/apt/sources.list \
+RUN if [ -f /etc/apt/sources.list ]; then \
+    sed -i "s|http://deb.debian.org/debian|${DEBIAN_MIRROR}/debian|g" /etc/apt/sources.list; \
+    sed -i "s|http://security.debian.org/debian-security|${DEBIAN_MIRROR}/debian-security|g" /etc/apt/sources.list; \
+  fi \
+  && if [ -f /etc/apt/sources.list.d/debian.sources ]; then \
+    sed -i "s|http://deb.debian.org/debian|${DEBIAN_MIRROR}/debian|g" /etc/apt/sources.list.d/debian.sources; \
+    sed -i "s|http://security.debian.org/debian-security|${DEBIAN_MIRROR}/debian-security|g" /etc/apt/sources.list.d/debian.sources; \
+  fi \
   && apt-get update \
   && apt-get install -y --no-install-recommends nodejs npm \
   && rm -rf /var/lib/apt/lists/*
